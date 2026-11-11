@@ -1,0 +1,32 @@
+# Workspace-level tooling config for the Python services and packages.
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]
+asyncio_mode = "auto"
+timeout = 120
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py312"
+extend-exclude = ["apps/web", "node_modules", ".venv", "apps/api/alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "ASYNC", "RUF"]
+ignore = ["S101", "S311", "B008", "RUF001", "RUF002", "RUF003", "RUF012", "S105", "S106", "E501", "S603", "S607", "B904", "UP047", "UP046", "S608", "RUF005"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "B"]
+"packages/coding/intervue_coding/harness.py" = ["S"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "worker", "intervue_ai", "intervue_engine", "intervue_eval", "intervue_coding", "intervue_voice", "intervue_security"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+warn_unused_ignores = false
+no_implicit_optional = true
+explicit_package_bases = true
+exclude = ["apps/api/alembic/", "tests/"]
